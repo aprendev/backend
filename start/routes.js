@@ -22,5 +22,6 @@ Route.get("/", async () => {
 });
 
 Route.post("/auth/register", "UserController.create");
+Route.post("/auth", "AuthController.create");
 Route.get("/users", "UserController.index");
 Route.get("/user/:username", "UserController.show");
