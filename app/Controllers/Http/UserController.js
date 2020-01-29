@@ -1,6 +1,7 @@
 "use strict";
 
 const User = use("App/Models/User");
+const Database = use("Database");
 
 class UserController {
   async index({ response }) {
@@ -9,7 +10,17 @@ class UserController {
   }
   async show({ params, response }) {
     const username = params.username;
-    const user = await User.findBy("username", username);
+    const user = await Database.table("users")
+      .select([
+        "id",
+        "username",
+        "email",
+        "level",
+        "github_username",
+        "work_shift",
+        "points"
+      ])
+      .where("username", username);
     if (user) {
       return user;
     } else {
