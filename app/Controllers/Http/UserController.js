@@ -3,7 +3,10 @@
 const User = use("App/Models/User");
 
 class UserController {
-  async index() {}
+  async index({ response }) {
+    const users = await User.all();
+    response.status(200).send(users);
+  }
   async show({ params, response }) {
     const username = params.username;
     const user = await User.findBy("username", username);
