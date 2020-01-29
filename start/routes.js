@@ -18,11 +18,9 @@ const Route = use("Route");
 const User = use("App/Models/User");
 
 Route.get("/", async () => {
-  const user = await User.create({
-    username: "Goufix",
-    email: "alifer.17.11@gmail.com",
-    password: "senha123",
-    levels: "índio"
-  });
-  return user;
+  return { message: "Hello World!" };
 });
+
+Route.post("/auth/register", "UserController.create");
+
+Route.get("/user/:username", "UserController.show");
