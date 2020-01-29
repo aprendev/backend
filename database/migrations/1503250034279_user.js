@@ -6,17 +6,21 @@ const Schema = use("Schema");
 class UserSchema extends Schema {
   up() {
     this.create("users", table => {
-      table.increments();
+      table.increments(); // Id
       table
-        .string("username", 80)
+        .string("username")
         .notNullable()
-        .unique();
+        .unique(); // String Username
       table
-        .string("email", 254)
+        .string("email")
         .notNullable()
-        .unique();
-      table.string("password", 60).notNullable();
-      table.timestamps();
+        .unique(); // String email
+      table.string("password").notNullable(); // String password
+      table.string("level").notNullable(); // Nível
+      table.string("github_username").notNullable(); // Uusário do github
+      table.string("work_shift").notNullable(); // Turno
+      table.string("points").notNullable(); // XP
+      table.timestamps(); // created_at + updated_at
     });
   }
 
