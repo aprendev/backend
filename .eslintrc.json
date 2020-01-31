@@ -1,0 +1,10 @@
+{
+  "extends": ["lffg", "prettier"],
+  "plugins": ["prettier"],
+  "globals": {
+    "use": "readonly"
+  },
+  "rules": {
+    "prettier/prettier": "error"
+  }
+}

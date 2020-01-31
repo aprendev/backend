@@ -1,5 +1,3 @@
-"use strict";
-
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -14,14 +12,20 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use("Route");
-const User = use("App/Models/User");
+const Route = use('Route');
 
-Route.get("/", async () => {
-  return { message: "Hello World!" };
+Route.get('/', async () => {
+  return { message: 'Hello World!' };
 });
 
-Route.post("/auth/register", "UserController.create");
-Route.post("/auth", "AuthController.create");
-Route.get("/users", "UserController.index");
-Route.get("/user/:username", "UserController.show");
+Route.post('/auth/register', 'UserController.create');
+Route.post('/auth', 'AuthController.create');
+Route.get('/users', 'UserController.index');
+Route.get('/user/:username', 'UserController.show');
+
+Route.group(() => {
+  Route.get('/admin', async ({ auth }) => {
+    const tokens = await auth.listTokens();
+    return { tokens };
+  });
+}).middleware('auth');
