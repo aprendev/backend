@@ -40,12 +40,19 @@ class UserController {
       return { user };
     }
   }
-  async update({ params, request, response }) {
+  async update({ params, request, response, auth }) {
+    const { id: loggedUserId } = await auth.getUser();
     const user = await User.find(params.id);
-    const newUserData = request.only(this.requestParams);
-    await user.merge({ ...newUserData });
-    await user.save();
-    return response.status(200).json({ user });
+    if (user.id !== loggedUserId) {
+      response
+        .status(401)
+        .json({ error: 'Você não pode alterar dados de outro usuário' });
+    } else {
+      const newUserData = request.only(this.requestParams);
+      await user.merge({ ...newUserData });
+      await user.save();
+      return response.status(200).json({ user });
+    }
   }
 }
 
