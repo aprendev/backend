@@ -1,10 +1,6 @@
 {
-  "extends": ["lffg", "prettier"],
-  "plugins": ["prettier"],
+  "extends": ["lffg"],
   "globals": {
     "use": "readonly"
-  },
-  "rules": {
-    "prettier/prettier": "error"
   }
 }
