@@ -14,7 +14,14 @@ class UserSchema extends Schema {
         .notNullable()
         .unique(); // String email
       table.string('password').notNullable(); // String password
-      table.string('level').notNullable(); // Nível
+
+      // "Rank do usuário"
+      table
+        .integer('level_id')
+        .unsigned()
+        .references('id')
+        .inTable('levels');
+
       table.string('github_username').notNullable(); // Uusário do github
       table.string('work_shift').notNullable(); // Turno
       table.string('points').notNullable(); // XP
