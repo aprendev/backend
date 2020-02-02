@@ -1,5 +1,4 @@
 const { HttpException } = use('@adonisjs/generic-exceptions');
-const User = use('App/Models/User');
 const Database = use('Database');
 
 class AuthController {
