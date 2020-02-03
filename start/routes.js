@@ -9,9 +9,12 @@ Route.post('/auth/register', 'UserController.create');
 Route.post('/auth', 'AuthController.create');
 
 Route.group(() => {
-  Route.get('/admin', async ({ auth }) => {
-    const tokens = await auth.listTokens();
-    return { tokens };
+  Route.get('/admin', async () => {
+    // TODO: Criar a rota admin que devolve a listagem de todos os usuários
+    // Cadastrados no sistema
+
+    // Todo: Goufix
+    return { Error: 'Not implemented' };
   });
   Route.put('/users/:id', 'UserController.update');
   Route.get('/users', 'UserController.index');
