@@ -37,7 +37,3 @@ class AuthController {
   }
 }
 module.exports = AuthController;
-
-// Coloca um usuário e senha válidos aqui em baixo por favor.
-// User = Goufix
-// Pass = senha
