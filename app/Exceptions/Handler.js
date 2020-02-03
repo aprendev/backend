@@ -37,7 +37,7 @@ class ExceptionHandler extends BaseExceptionHandler {
   }
 
   get ignoredReporterErrorCodes() {
-    return ['___ERR_FAILED_LOGIN'];
+    return ['ERR_FAILED_LOGIN'];
   }
 
   async report({ status, message, stack, code }) {
