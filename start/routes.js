@@ -10,9 +10,9 @@ Route.post('/auth', 'AuthController.create');
 
 Route.group(() => {
   Route.get('/admin', async () => {
-    // TODO: Criar a rota admin que devolve a listagem de todos os usuários
-    // Cadastrados no sistema
-
+    /* TODO: Criar a rota admin que devolve a listagem de todos os usuários
+       Cadastrados no sistema
+    */
     // Todo: Goufix
     return { Error: 'Not implemented' };
   });
