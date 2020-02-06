@@ -1,18 +1,18 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
-Route.get('/', async () => {
+Route.get('/', () => {
   return { message: 'Hello World!' };
 });
 
 Route.post('/auth/register', 'UserController.create');
-Route.post('/auth', 'AuthController.create');
-Route.post('/licenses', 'LicenseController.create');
-Route.get('/licenses', 'LicenseController.index');
-Route.get('/licenses/:id', 'LicenseController.show');
 
 Route.group(() => {
-  Route.get('/admin', async () => {
+  Route.post('/auth', 'AuthController.create');
+  Route.post('/licenses', 'LicenseController.create');
+  Route.get('/licenses', 'LicenseController.index');
+  Route.get('/licenses/:id', 'LicenseController.show');
+  Route.get('/admin', () => {
     /* TODO: Criar a rota admin que devolve a listagem de todos os usuários
        Cadastrados no sistema
     */
