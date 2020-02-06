@@ -6,6 +6,30 @@
  * Resourceful controller for interacting with licenses
  */
 class LicenseController {
+  async show({ response, params }) {
+    const id = params.id;
+    const userLicences = await Database.select([
+      'L.id',
+      'L.user_id',
+      'L.created_at',
+      'L.ends_in',
+      'L.authorization_id',
+      'U.id as user_id',
+      'U.username as user_name'
+    ])
+      .from('licenses as L')
+      .innerJoin('users as U', 'L.user_id', '=', 'U.id')
+      .where({ user_id: id });
+    if (userLicences.length !== 0) {
+      response.json(userLicences);
+    } else {
+      throw new HttpException(
+        'O usuário não possui licenças ativas',
+        404,
+        'ERR_USER_WHITHOUT_LICENSE'
+      );
+    }
+  }
   async create({ auth, request, response }) {
     const { days, authorization_id: authorizationId } = request.all();
     const date = new Date();
