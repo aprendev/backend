@@ -1,11 +1,30 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+const { HttpException } = use('@adonisjs/generic-exceptions');
+
+const Licence = use('App/Models/License');
+const User = use('App/Models/User');
+const Database = use('Database');
 
 /**
  * Resourceful controller for interacting with licenses
  */
 class LicenseController {
+  async index({ response }) {
+    const userLicences = await Database.select([
+      'L.id',
+      'L.user_id',
+      'L.created_at',
+      'L.ends_in',
+      'L.authorization_id',
+      'U.id as user_id',
+      'U.username as user_name'
+    ])
+      .from('licenses as L')
+      .innerJoin('users as U', 'L.user_id', '=', 'U.id');
+    response.json(userLicences);
+  }
   async show({ response, params }) {
     const id = params.id;
     const userLicences = await Database.select([
