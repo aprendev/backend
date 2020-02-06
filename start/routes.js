@@ -7,6 +7,9 @@ Route.get('/', async () => {
 
 Route.post('/auth/register', 'UserController.create');
 Route.post('/auth', 'AuthController.create');
+Route.post('/licenses', 'LicenseController.create');
+Route.get('/licenses', 'LicenseController.index');
+Route.get('/licenses/:id', 'LicenseController.show');
 
 Route.group(() => {
   Route.get('/admin', async () => {
