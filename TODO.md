@@ -1,4 +1,4 @@
-# TODO:
+# TODO
 
 - [ ] Fazer o MMC dos desafios
   - [ ] Métodos do controller
