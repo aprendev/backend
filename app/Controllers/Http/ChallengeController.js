@@ -1,93 +1,47 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+const { HttpException } = use('@adonisjs/generic-exceptions');
+
+const Challenge = use('App/Models/Challenge');
 
 /**
  * Resourceful controller for interacting with challenges
  */
 class ChallengeController {
-  /**
-   * Show a list of all challenges.
-   * GET challenges
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async create({ request, response, auth }) {
+    const user = await auth.getUser();
+    const userLevel = await user.level().fetch();
+    if (userLevel.id === 3 || userLevel.id === 2) {
+      const { days, description, title, level_id: levelId } = request.all();
+      const parsedDays = parseInt(days, 10);
+      if (!isNaN(parsedDays)) {
+        const date = new Date();
+        date.setDate(date.getDate() + days);
+        const responseData = await Challenge.create({
+          user_id: user.id,
+          ends_in: date,
+          description,
+          title,
+          level_id: levelId
+        });
+        response.status(201).json(responseData);
+      } else {
+        throw new HttpException(
+          'O parâmetro day deve ser um número',
+          400,
+          'ERR_PARM_VALIDATION'
+        );
+      }
+    } else {
+      throw new HttpException(
+        'Apenas instrutores ou administradores podem criar novo desafios',
+        401,
+        'ERR_INVALID_AUTHORIZER'
+      );
+    }
   }
-
-  /**
-   * Render a form to be used for creating a new challenge.
-   * GET challenges/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
-  /**
-   * Create/save a new challenge.
-   * POST challenges
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
-  }
-
-  /**
-   * Display a single challenge.
-   * GET challenges/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-  }
-
-  /**
-   * Render a form to update an existing challenge.
-   * GET challenges/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update challenge details.
-   * PUT or PATCH challenges/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a challenge with id.
-   * DELETE challenges/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
-  }
+  async update() {}
 }
 
-module.exports = ChallengeController
+module.exports = ChallengeController;
