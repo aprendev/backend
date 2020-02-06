@@ -10,7 +10,7 @@ class LicensesSchema extends Schema {
         .unsigned()
         .references('id')
         .inTable('users');
-      table.string('ends_in').notNullable();
+      table.timestamp('ends_in').notNullable();
       table
         .integer('authorization_id')
         .unsigned()
