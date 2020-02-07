@@ -16,7 +16,7 @@ class TelegramReporter {
     this.messageURI = `${BASE_TELEGRAM_API}/bot${tokenId}/sendMessage`;
   }
 
-  getPayload(data) {
+  _getPayload(data) {
     return {
       chat_id: this.chatId,
       disable_notification: false,
@@ -25,7 +25,7 @@ class TelegramReporter {
   }
 
   async sendMessage(text) {
-    const data = this.getPayload({ text });
+    const data = this._getPayload({ text });
 
     const body = await got.post(this.messageURI, { json: data }).json();
     return body.ok;
