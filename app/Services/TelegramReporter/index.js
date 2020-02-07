@@ -1,11 +1,21 @@
 const Env = use('Env');
 const got = require('got');
+const FallbackReporter = require('./FallbackReporter');
 
 const BASE_TELEGRAM_API = 'https://api.telegram.org';
 
 class TelegramReporter {
   constructor(chatId, tokenId) {
     if (!chatId || !tokenId) {
+      if (Env.get('NODE_ENV') !== 'production') {
+        // Should ONLY be used in development and testing environments when the
+        // Telegram API keys are not defined.
+        //
+        // `FallbackReporter` throws an error when constructed in a production
+        // environment.
+        return new FallbackReporter();
+      }
+
       throw new Error(
         'Missing `TELEGRAM_CHAT_ID` or `TELEGRAM_TOKEN` environment variables.'
       );
