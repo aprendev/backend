@@ -2,6 +2,13 @@ const { HttpException } = use('@adonisjs/generic-exceptions');
 const Database = use('Database');
 
 class AuthController {
+  async check({ auth, response }) {
+    await auth
+      .getUser()
+      .then(() => response.json({ isValidToken: true }))
+      .catch(() => response.json({ isValidToken: false }));
+  }
+
   async create({ request, auth }) {
     const { username, password } = request.all();
 

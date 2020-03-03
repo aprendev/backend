@@ -9,6 +9,9 @@ Route.post('/auth/register', 'UserController.create');
 // Autenticação
 Route.post('/auth', 'AuthController.create');
 
+// Validação de token:
+Route.get('/validateToken', 'AuthController.check');
+
 Route.group(() => {
   // Desafios
   Route.post('/challenges', 'ChallengeController.create');
