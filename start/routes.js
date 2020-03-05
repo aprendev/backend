@@ -30,6 +30,10 @@ Route.group(() => {
     return { Error: 'Not implemented' };
   });
 
+  Route.get('/notification/:username', 'NotificationController.show');
+  Route.get('/notifications', 'NotificationController.index');
+  Route.post('/notifications', 'NotificationController.create');
+
   // UserController
   Route.put('/users/:id', 'UserController.update');
   Route.get('/users', 'UserController.index');
